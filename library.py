@@ -1,9 +1,11 @@
 library = [
+
     {
     "название": "Введение в Python. Том 1",
     "автор": "Марк Лутц",
     "год": 2022
     },
+
     {
     "название": "Введение в Python. Том 2",
     "автор": "Марк Лутц",
@@ -14,46 +16,97 @@ library = [
 
 
 def show_all_books():
+    """
+    Выводи на экран все книги
+    """
+    if not library:
+        print("")
+        print("Книг нету!")
+        print("")
+        return
     for num, book in enumerate(library, 1):
-        print("номер на полке", num)
-        print("название", book["название"])
-        print("автор", book["автор"])
-        print("год", book["год"])
+        print("номер на полке:", num)
+        print("название:", book["название"])
+        print("автор:", book["автор"])
+        print("год:", book["год"])
         print("")
 
 
-def add_book():
-   title = input("Введите название книги:")
-   if not title:
+def add_book() -> None:
+
+    """
+
+    Добавляет уникальную книгу, если автор,название или год выпуска различаются иначе return
+
+    """
+
+    title = input("Введите название книги:")
+    if not title:
        print("НЕТ НАЗВАНИЯ!")
+       print("")
        return
-   author = input("Введите имя автора:")
-   if not author:
+    author = input("Введите имя автора:")
+    if not author:
        print("НЕТ АВТОРА!")
+       print("")
        return
-   year = input("Введите год издания:")
-   if not year:
-       print("НЕТ ГОДА ИЗДАНИЯ!")
-   if year.isdigit():
+    year = input("Введите год издания:")
+    if year.isdigit():
        year = int(year)
-   else:
+    else:
        print("Вводите цифры!")
+       print("")
        return
 
-   book = {
+    book = {
     "название": title,
     "автор": author,
     "год": year,
-   }
-   if book in library:
+    }
+    if book in library:
        print("")
        print("такая книга уже есть!")
        print("")
        return
 
 
-   library.append(book)
+    library.append(book)
+    print("")
+    print(f"Книга {book['название']} успешно добавлена")
+    print("")
 
-add_book()
+def remove_book() -> None:
+    """
+    удаляет книгу по номеру
+    """
+    if not library:
+        print("библиотека пуста!")
+        return
+
+    num = input("Введите порядковый номер книги для удаления ")
+
+    if num.isdigit():
+        num = int(num)
+    else:
+        print("номер должен быть больше нуля!")
+        return
+
+    idx = num -1
+
+    if idx < 0 or idx >= len(library):
+        print("такой книги нет!")
+        return
+
+
+    print("")
+    print(f"Книга {library[idx]['название']} удалена")
+    print("")
+    library.pop(idx)
+
+
+
+
+remove_book()
 
 show_all_books()
+
